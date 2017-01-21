@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4607014692850922}
   - component: {fileID: 212875027886319672}
+  - component: {fileID: 61741015308389014}
+  - component: {fileID: 61003703089587338}
   m_Layer: 0
   m_Name: top_left
   m_TagString: Untagged
@@ -40,6 +42,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!61 &61003703089587338
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647845031781824}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0.4}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2}
+--- !u!61 &61741015308389014
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647845031781824}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.4, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 1}
 --- !u!212 &212875027886319672
 SpriteRenderer:
   m_ObjectHideFlags: 1
