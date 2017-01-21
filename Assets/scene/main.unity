@@ -2665,7 +2665,8 @@ MonoBehaviour:
   moveRight: 275
   moveUp: 273
   moveDown: 274
-  speed: 1
+  moveSpeed: 0.75
+  rotationSpeed: 0.75
   map: {fileID: 1168783953}
 --- !u!212 &412029326
 SpriteRenderer:
@@ -8628,7 +8629,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.625, g: 0.625, b: 0.625, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
