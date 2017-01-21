@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour {
 
+    public Transform wallsContainer;
     public Tile[,] map;
 
     [HideInInspector]
@@ -17,7 +18,7 @@ public class Map : MonoBehaviour {
         var maxX = 0;
         var maxY = 0;
 
-        foreach (Transform child in transform)
+        foreach (Transform child in wallsContainer)
         {
             var pos = WorldToMap(child.position);
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Direction { up, down, left, right, none };
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerGridMove : MonoBehaviour {
 
     [Header("Control Keys")]
     public KeyCode moveLeft;
