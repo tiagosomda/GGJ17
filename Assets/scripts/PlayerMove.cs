@@ -6,7 +6,7 @@ public class PlayerMove : MonoBehaviour {
     [Header("Move Settings")]
     [Range(0f,10f)]
     public float moveSpeed;
-    [Range(0f, 1f)]
+    [Range(0f, 10f)]
     public float rotationSpeed;
 
     private Vector2 movement;
@@ -26,15 +26,24 @@ public class PlayerMove : MonoBehaviour {
         movement.x = Input.GetAxis("Horizontal") * moveSpeed;
         movement.y = Input.GetAxis("Vertical")   * moveSpeed;
 
+        // if there is no input - then don't update the rotation
+        if (movement.x == 0 && movement.y == 0)
+        {
+            return;
+        }
 
-        Vector3.Angle(movement, Vector3.forward);
-
-        var temp = ((movement.x > 0) ? 270 : (movement.x < 0) ? 90f : (movement.y > 0) ? 0f : (movement.y < 0) ? 180 : rotation);
+        var temp = Vector2.Angle(Vector2.up, movement);
+        if (movement.x > 0)
+        {
+            temp *= -1;
+        }
+        
         if(temp != rotation)
         {
             rotation = temp;
             rotationTimer = 0;
         }
+        
     }
 
     void FixedUpdate()
@@ -56,4 +65,5 @@ public class PlayerMove : MonoBehaviour {
             rotationTimer += Time.fixedDeltaTime;
         }
     }
+
 }

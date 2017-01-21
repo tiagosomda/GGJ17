@@ -38,7 +38,7 @@ public class Map : MonoBehaviour {
 
         map = new Tile[width + 1, height + 1];
 
-        foreach (Transform child in transform)
+        foreach (Transform child in wallsContainer)
         {
             var name = child.name;
 
