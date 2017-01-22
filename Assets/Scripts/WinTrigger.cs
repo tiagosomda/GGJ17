@@ -18,6 +18,8 @@ public class WinTrigger : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		slowDownTime = false;
+		GameController.gameOver = false;
+		gameOverState = false;
 	}
 		
 	// Update is called once per frame
@@ -54,12 +56,16 @@ public class WinTrigger : MonoBehaviour {
 	{
 		Time.timeScale = 1f;
 		SceneManager.LoadScene (0);
+		GameController.gameOver = false;
+		gameOverState = false;
 		Debug.Log ("RESET GAME!");
 	}
 		
 	public void RestartGame() {
 		Time.timeScale = 1f;
 		SceneManager.LoadScene (1);
+		GameController.gameOver = false;
+		gameOverState = false;
 		Debug.Log ("MAIN MENU!");
 	}
 }

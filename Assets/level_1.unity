@@ -4557,7 +4557,7 @@ Prefab:
         type: 2}
       propertyPath: anchor
       value: 
-      objectReference: {fileID: 79154181}
+      objectReference: {fileID: 783294219}
     - target: {fileID: 114000801060624062, guid: 30508649698473247bdd05d9e40eea80,
         type: 2}
       propertyPath: poi.Array.data[0]
@@ -8116,6 +8116,16 @@ Prefab:
     - target: {fileID: 1670496440175192, guid: 317719c2353c12d488d005b67e2db7d2, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114771551028745918, guid: 317719c2353c12d488d005b67e2db7d2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 114520923277448890, guid: 317719c2353c12d488d005b67e2db7d2,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 317719c2353c12d488d005b67e2db7d2, type: 2}
