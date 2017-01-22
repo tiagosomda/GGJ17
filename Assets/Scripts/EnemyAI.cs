@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
 
 public enum Rank{
 	Coworker,
@@ -17,20 +18,19 @@ public class EnemyAI : MonoBehaviour {
 	//Lists
 	public List<GameObject> likedPeople=new List<GameObject>(); // People I will chat up a storm with in there presenc
 	public List<GameObject> hatedPeople =new List<GameObject>(); // People I will punch if in presence
-
+ 
 	//Refs
 	FieldOfView fieldView;
-	Rank rank;
+	//Rank rank;
 
 	Vector3 spawnLocation; //Random
 
 	[HideInInspector]
 	public Vector3 lastKnownPosit;//last known position you saw player
 
-	//Vars
-
-	[HideInInspector]
-	public Transform player;
+    //Vars
+    public NavMeshAgent navAgent;
+	public GameObject player;
 
 	[Range(0,10)]
 	public float speed;
@@ -50,63 +50,65 @@ public class EnemyAI : MonoBehaviour {
 	//Raycast
 	RaycastHit hit;
 	Ray ray;
+  //  public GameObject targ;
+    public Vector3 spawnPoint;
+    public NpcBehavior npc;
 
-
+    public bool chase = false;
 	void Start () {
 		fieldView = GetComponent<FieldOfView> ();
-
-		//Find player to kep track of distance
-		player = GameObject.FindWithTag ("Player").transform;
+        npc = GetComponent<NpcBehavior>();
+        //Find player to kep track of distance
+        player = GameObject.FindWithTag("Player");
+       navAgent = gameObject.GetComponent<NavMeshAgent>();
 	}
 	
 
 	void Update () {
-		disttoPlayer = Vector3.Distance (transform.position, player.position);
+  
 
-		//If within distance draw line of sight
-		if(disttoPlayer<closestDistToDraw){
-			fieldView.DrawFOW ();
-			}
+        if (chase)
+        {
+            npc.goAfter = true;
+            navAgent.SetDestination(player.transform.position);
 
-		if(state==aiState.Patrol){
-			//Create way points and patrol
-			Patrol (RandomSpherePoints(transform.position,Random.Range(5,8.5f),terrainMask));
-			}
-		}
+        }
+        else
+        {
+            npc.goAfter = false;
+            navAgent.speed = 1.75f;
+        }
 		
-	public void SetDestination(Vector3 posit, float speed){
-		if(fieldView.target!=null){
-		if (transform.position != posit) {
-			//Move to posit
-		} else {
-			//do som
-			switch(rank){
-				case Rank.Coworker:
-				Coworker ();
-				break;
-
-				case Rank.Manager:
-					Boss ();
-				break;
-				}
-			}
 		}
-		else{
-			//if target dissappears then patrol
-			state = aiState.Patrol;
-		}
+	
+	public void SetDestination(GameObject targ,float speedR){
+                navAgent.destination = transform.position;
+                 player = targ;
+                navAgent.speed = speedR;
+        return;
 	}
+
 	void Coworker(){
-		//Moves towards,
-		//when Close enough interact
-	}
+        float wanderTime = new float();
+        wanderTime = 45;
+        wanderTime-= Time.deltaTime;
+        Debug.Log("Coworker Timer: " + wanderTime.ToString());
 
-	void Boss(){
-		//Moves towards,
-		//when Close enough interact
+        if (wanderTime <= 0)
+            state = aiState.Working;
+	
 	}
-		
-	void Patrol(Vector3[] wayP){
+    void Boss()
+    {
+        float panderTime = new float();
+        panderTime = 90;
+        panderTime -= Time.deltaTime;
+        Debug.Log("Boss Timer: " + panderTime.ToString());
+        if (panderTime <= 0) { 
+        //set destination to exit and deactivate when i gets to exit
+        }
+    }	
+	/*void Patrol(Vector3[] wayP){
 		float runDown = 45;
 		runDown -= Time.deltaTime;
 		if(runDown>0){
@@ -144,15 +146,15 @@ public class EnemyAI : MonoBehaviour {
 		for(int r=0;r<2;r++){
 			point[r]=randomDirection += origin;
 	
-			//NavMeshHit navHit;
-			//NavMesh.SamplePosition (randomDirection, out navHit, distance, layerMask);
-			//point [r] = navHit.point;
+			NavMeshHit navHit;
+			NavMesh.SamplePosition (randomDirection, out navHit, distance, layerMask);
+            point[r] = navHit.position;
 		}
 		//Middle posit is last known posit
 		point[1]=lastKnownPosit;
 		return point;
-	}
-	void OnDrawGizmos(){
+	}*/
+	/*void OnDrawGizmos(){
 		Gizmos.color = Color.white;
 		if(waypoints.Length>0){
 		//Visual Way point debug
@@ -160,6 +162,6 @@ public class EnemyAI : MonoBehaviour {
 				Gizmos.DrawSphere (wayWay,1);
 			}
 		}
-	}
+	}*/
 
 }

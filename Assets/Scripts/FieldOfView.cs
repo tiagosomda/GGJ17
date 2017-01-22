@@ -14,10 +14,10 @@ public class FieldOfView : MonoBehaviour {
 	[Range(0,360)]
 	public float setAngle=25;
 
-	public float lerpSpeed=.5f;
+	public float lerpSpeed=.75f;
 
 	[HideInInspector]
-	public float viewRadius=5;
+	public float viewRadius=7.5f;
 
 
 	[Range(0,360),HideInInspector]
@@ -58,7 +58,7 @@ public class FieldOfView : MonoBehaviour {
 	void LateUpdate(){
 		//Late update to avoid jitter
 		//the higher the mesh resolution the more stable the mesh
-		//DrawFOW ();
+		DrawFOW ();
 
 		//Slowly expand radius and angle
 		if (viewRadius != setRadius)
@@ -193,30 +193,36 @@ public class FieldOfView : MonoBehaviour {
 
 	void FindVisibleTargets(){
 		visTargets.Clear ();
-		//3D
-		//Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
-
 		//2D
 		Collider[] targetsInViewRadius=Physics.OverlapSphere(transform.position,viewRadius,targetMask);
-
+       
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			target = targetsInViewRadius [i].transform;
 			Vector3 dirtoPlayer = (target.position-transform.position).normalized;
-			;
+			
 
 			if(Vector3.Angle(Vector3.forward,dirtoPlayer)<viewAngle/2){
 				float dstToTarget = Vector3.Distance (transform.position, target.position);
 
-				if(Physics.Raycast (transform.position,Vector3.forward,viewRadius,targetMask)){
+				if(Physics.Raycast (transform.position,dirtoPlayer,dstToTarget,targetMask)){
 					visTargets.Add (target);
 					if(target.CompareTag("Player")){
-					anAI.lastKnownPosit = target.position;
-					anAI.SetDestination (target.position, 5);
-					}
+                        if (Vector3.Distance(transform.position, target.position) < 16)
+                        {
+                            anAI.SetDestination(target.gameObject,3.75f);
+                            anAI.chase = true;
+                        }
+
+           
+                        }
+                }else
+                {
+                    anAI.chase = false;
+                    }
 				}
 			}
 		}
-	}
+	
 
 
 	public Vector3 DirAngle(float angleDegrees, bool angleIsGlobal){
