@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 91347381}
   - component: {fileID: 91347380}
   - component: {fileID: 91347379}
+  - component: {fileID: 91347382}
   m_Layer: 5
   m_Name: ControlButton
   m_TagString: Untagged
@@ -178,6 +179,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 91347382}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &91347380
@@ -213,6 +225,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 91347377}
+--- !u!114 &91347382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 91347377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44fe379aedbdf04fb144d85435a9bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  clips:
+  - {fileID: 8300000, guid: c09fc4b19e8dfe247a5e70b097d61166, type: 3}
+  - {fileID: 8300000, guid: 060db7c244a54a04d84b4c2cfc7f6ada, type: 3}
+  - {fileID: 8300000, guid: cf53e388d839bb14c930fa8c0f7a58f7, type: 3}
+  playMode: 0
 --- !u!1 &107278737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,6 +1541,7 @@ GameObject:
   - component: {fileID: 1473009527}
   - component: {fileID: 1473009529}
   - component: {fileID: 1473009528}
+  - component: {fileID: 1473009530}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1576,6 +1606,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1473009526}
+--- !u!114 &1473009530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1473009526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44fe379aedbdf04fb144d85435a9bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  clips: []
+  playMode: 0
 --- !u!1 &1585931255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2383,6 +2427,7 @@ GameObject:
   - component: {fileID: 1906296195}
   - component: {fileID: 1906296194}
   - component: {fileID: 1906296193}
+  - component: {fileID: 1906296196}
   m_Layer: 5
   m_Name: BackToStartButton
   m_TagString: Untagged
@@ -2459,6 +2504,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1906296196}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1906296194
@@ -2494,6 +2550,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1906296191}
+--- !u!114 &1906296196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1906296191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44fe379aedbdf04fb144d85435a9bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  clips:
+  - {fileID: 8300000, guid: c09fc4b19e8dfe247a5e70b097d61166, type: 3}
+  - {fileID: 8300000, guid: 060db7c244a54a04d84b4c2cfc7f6ada, type: 3}
+  - {fileID: 8300000, guid: cf53e388d839bb14c930fa8c0f7a58f7, type: 3}
+  playMode: 0
 --- !u!1 &1939660016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,8 +2599,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: -5}
-  m_SizeDelta: {x: 467, y: 824}
+  m_AnchoredPosition: {x: 1, y: 1}
+  m_SizeDelta: {x: 450, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1939660018
 MonoBehaviour:

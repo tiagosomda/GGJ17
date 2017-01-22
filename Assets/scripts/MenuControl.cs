@@ -48,7 +48,7 @@ public class MenuControl : MonoBehaviour {
 		
 
 	public void StartGame() {
-		SceneManager.LoadScene ("main");
+		SceneManager.LoadScene ("level_1");
 	}
 
 	public void NewBinding (GameObject obj) {
