@@ -8,7 +8,7 @@ public class MenuControl : MonoBehaviour {
 
 	private GameObject nowBinding = null;
 
-	private string[] mouseButtons= new string[]{"Left", "Right", "Middle"};
+	private string[] mouseButtons= new string[]{"left", "right", "middle"};
 
 	// Use this for initialization
 	void Start () {
@@ -72,7 +72,7 @@ public class MenuControl : MonoBehaviour {
 
 			if (evt.isKey) {
 
-				value = evt.keyCode.ToString ();
+				value = evt.keyCode.ToString ().ToLower();
 
 				//save the key, value pair for the input code later (during game)
 				PlayerPrefs.SetString (key, value);
@@ -82,7 +82,7 @@ public class MenuControl : MonoBehaviour {
 				value = evt.button.ToString();
 
 				//save the key, value pair for the input code later (during game)
-				PlayerPrefs.SetInt (key, evt.button);
+				PlayerPrefs.SetString (key, value);
 
 			}
 		 
@@ -90,7 +90,7 @@ public class MenuControl : MonoBehaviour {
 
 			//change mouse input value to be human readable
 			if (evt.isMouse) {
-				value = mouseButtons [evt.button] + " Click";
+				value = mouseButtons [evt.button] + " click";
 			}
 
 

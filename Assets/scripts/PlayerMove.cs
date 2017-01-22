@@ -13,6 +13,9 @@ public class PlayerMove : MonoBehaviour {
     private Rigidbody2D rb;
     private float rotationTimer;
 
+	//key binding variables
+	private string upButton, downButton, leftButton, rightButton;
+
     private float rotation;
 
 	// Use this for initialization
@@ -23,8 +26,11 @@ public class PlayerMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        movement.x = Input.GetAxis("Horizontal") * moveSpeed;
-        movement.y = Input.GetAxis("Vertical")   * moveSpeed;
+		CheckInput ();
+
+		//movement.x = Input.GetAxis("Horizontal") * moveSpeed;
+        //movement.y = Input.GetAxis("Vertical")   * moveSpeed;
+	
 
         // if there is no input - then don't update the rotation
         if (movement.x == 0 && movement.y == 0)
@@ -65,5 +71,70 @@ public class PlayerMove : MonoBehaviour {
             rotationTimer += Time.fixedDeltaTime;
         }
     }
+
+
+
+
+
+	private void CheckInput() {
+		 
+		if (!Input.anyKey) {
+			movement = Vector2.zero;
+		}
+
+		if (Input.GetKey (upButton)) {
+			movement.y = moveSpeed;
+		} 
+		if (Input.GetKey(downButton)) {
+			movement.y = -moveSpeed;
+		} 
+		if (Input.GetKey(leftButton)) {
+			movement.x = -moveSpeed;
+		} 
+		if (Input.GetKey(rightButton)) {
+			movement.x = moveSpeed;
+		}
+
+		if (movement.x != 0 && movement.y != 0) {
+			movement = Vector2.zero;
+		}
+					
+	}
+
+
+	void Awake() {
+
+		//initialize player key bindings
+		if (PlayerPrefs.HasKey("Up")) {
+			upButton = PlayerPrefs.GetString ("Up");
+
+		}
+		else {
+			upButton = "w";
+		}
+
+		if (PlayerPrefs.HasKey("Down")) {
+			downButton = PlayerPrefs.GetString ("Down");
+		}
+		else {
+			downButton = "s";
+		}
+
+		if (PlayerPrefs.HasKey("Left")) {
+			leftButton = PlayerPrefs.GetString ("Left");
+		}
+		else {
+			leftButton = "a";
+		}
+
+		if (PlayerPrefs.HasKey("Right")) {
+			rightButton = PlayerPrefs.GetString ("Right");
+		}
+		else {
+			rightButton = "d";
+		}
+			
+			
+	}
 
 }
