@@ -28,23 +28,23 @@ public class FadeManager : MonoBehaviour {
 	}
 
 	private void Update(){
-			
 		if (!isInTransition)
 			return;
 		//trying to show fade
 		transition += (isShowing) ? Time.deltaTime * (1 / duration) : -Time.deltaTime * (1 / duration);
-		FadeImage.color = Color.Lerp (new Color (1, 1, 1, 0), Color.white, transition);
+		FadeImage.color = Color.Lerp (new Color (1, 1, 1, 0), Color.black, transition);
 
 		if (transition > 1 || transition < 0)
 			isInTransition = false;
 	}
+		
 
 }
 
-
-//		void Start() {
 //
-//		}
+//		void Start() {
+//		
+//	}
 //
 //		// Update is called once per frame
 //		void update () {
