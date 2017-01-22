@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WaveControl : MonoBehaviour {
 
@@ -18,14 +19,21 @@ public class WaveControl : MonoBehaviour {
 	private float speed;
 	private PlayerMove moveScript;
 
+	private Vector3 dir;
+	private NavMeshAgent nav;
+
+
 
 	void Awake() {
 
 		if (isPlayer) {
 			moveScript = GetComponent<PlayerMove> ();
 			speed = moveScript.moveSpeed;
+			dir = moveScript.movement;
+		} else {
+			nav = GetComponent<NavMeshAgent> ();
+			dir = nav.velocity;
 		}
-
 		waveButton = 0;
 
 		beckonButton = 1;
@@ -42,6 +50,14 @@ public class WaveControl : MonoBehaviour {
 
 		if (isPlayer) {
 
+			waving = false;
+			beckoning = false;
+
+			if (moveScript.movement != Vector3.zero) {
+				dir = moveScript.movement;
+			}
+
+
 			if (Input.GetMouseButton (waveButton)) {
 				Wave ();
 			} else if (Input.GetMouseButton (beckonButton)) {
@@ -49,15 +65,22 @@ public class WaveControl : MonoBehaviour {
 			}
 
 
-
-
 		} else {
+
+			if (nav.velocity != Vector3.zero) {
+				dir = nav.velocity;
+			}
 
 			RaycastHit hit;
 
-			if (Physics.Raycast (transform.position, transform.forward, out hit, range)) {
+			Debug.DrawLine (transform.position, transform.position + (dir * range));
 
-				if (hit.collider.tag == "player") {
+			if (Physics.Raycast (transform.position, dir, out hit, range)) {
+
+				Debug.Log ("hit " + hit.collider.tag);
+				Debug.DrawLine (transform.position, hit.point, Color.red);
+
+				if (hit.collider.tag == "worker") {
 
 					int rand = Random.Range (0, 1);
 					string waveType;
@@ -68,7 +91,11 @@ public class WaveControl : MonoBehaviour {
 						waveType = "beckon";
 					}
 
-					hit.collider.gameObject.GetComponent<WaveControl> ().Initiate (waveType, gameObject);
+					target = hit.collider.gameObject.transform.parent.gameObject;
+
+					hit.collider
+						.gameObject.transform.parent
+							.gameObject.GetComponent<WaveControl> ().Initiate (waveType, gameObject);
 
 				}
 			}
@@ -86,7 +113,9 @@ public class WaveControl : MonoBehaviour {
 
 			if (Vector3.Distance (transform.position, target.transform.position) <= 1) {
 
-				moveScript.hasControl = true;
+				if (isPlayer) {
+					moveScript.hasControl = true;
+				}
 				forceMovement = false;
 			}
 
@@ -97,10 +126,13 @@ public class WaveControl : MonoBehaviour {
 
 	void Wave() {
 
-		if (waiting) {
+		Debug.Log (gameObject.name + " waves");
+
+		if (waiting && target != null) {
 
 			waving = true;
 			beckoning = false;
+
 			target.GetComponent<WaveControl> ().Response ("wave", gameObject);
 
 		}
@@ -111,11 +143,16 @@ public class WaveControl : MonoBehaviour {
 
 			waving = true;
 
-			if( Physics.Raycast(transform.position, transform.forward, out hit, range) ) {
+			Debug.DrawLine (transform.position, transform.position + (dir * range));
+
+			if( Physics.Raycast(transform.position, dir, out hit, range) ) {
+
+				Debug.Log ("hit " + hit.collider.tag);
+				Debug.DrawLine (transform.position, hit.point, Color.red);
 
 				if (hit.collider.tag == "worker") {
 
-					target = hit.collider.gameObject;
+					target = hit.collider.gameObject.transform.parent.gameObject;
 						
 					target.GetComponent<WaveControl> ().Initiate("wave", gameObject);
 				}
@@ -125,7 +162,10 @@ public class WaveControl : MonoBehaviour {
 
 	void Beckon() {
 
-		if (waiting) {
+		Debug.Log(gameObject.name + " beckons");
+
+
+		if (waiting && target != null) {
 
 			beckoning = true;
 			waving = false;
@@ -138,11 +178,16 @@ public class WaveControl : MonoBehaviour {
 
 			beckoning = true;
 
-			if( Physics.Raycast(transform.position, transform.forward, out hit, range) ) {
+			Debug.DrawLine (transform.position, transform.position + dir * range);
+
+			if( Physics.Raycast(transform.position, dir, out hit, range) ) {
+
+				Debug.Log ("hit " + hit.collider.tag);
+				Debug.DrawLine (transform.position, hit.point, Color.red);
 
 				if (hit.collider.tag == "worker") {
 
-					target = hit.collider.gameObject;
+					target = hit.collider.gameObject.transform.parent.gameObject;
 
 					target.GetComponent<WaveControl> ().Initiate("beckon", gameObject);
 
@@ -152,6 +197,8 @@ public class WaveControl : MonoBehaviour {
 	}
 
 	public void Initiate(string waveType, GameObject initiator) {
+
+		Debug.Log ("Wave initiated by " + initiator.name);
 
 		target = initiator;
 
