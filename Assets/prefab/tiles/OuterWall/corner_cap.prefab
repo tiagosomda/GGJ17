@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61469033959952964}
   - component: {fileID: 61649808817374818}
   m_Layer: 0
-  m_Name: bottom_right_cap
+  m_Name: corner_cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
