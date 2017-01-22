@@ -237,7 +237,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 0}
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: c09fc4b19e8dfe247a5e70b097d61166, type: 3}
+  - {fileID: 8300000, guid: 060db7c244a54a04d84b4c2cfc7f6ada, type: 3}
+  - {fileID: 8300000, guid: cf53e388d839bb14c930fa8c0f7a58f7, type: 3}
   playMode: 0
 --- !u!1 &107278737
 GameObject:
@@ -2699,9 +2702,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   clips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: c09fc4b19e8dfe247a5e70b097d61166, type: 3}
+  - {fileID: 8300000, guid: 060db7c244a54a04d84b4c2cfc7f6ada, type: 3}
+  - {fileID: 8300000, guid: cf53e388d839bb14c930fa8c0f7a58f7, type: 3}
   playMode: 0
 --- !u!1 &1939660016
 GameObject:
