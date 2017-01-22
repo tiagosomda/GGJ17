@@ -13,11 +13,13 @@ public class WaveControl : MonoBehaviour {
 
 
 	private int waveButton, beckonButton;
-	private bool waiting= false;
+	public bool waiting= false;
 	private GameObject target= null;
 	private bool forceMovement= false;
 	private float speed;
 	private PlayerMove moveScript;
+
+	private SpriteRenderer renderer;
 
 	private Vector3 dir;
 	private NavMeshAgent nav;
@@ -25,6 +27,9 @@ public class WaveControl : MonoBehaviour {
 
 
 	void Awake() {
+
+		renderer = transform.FindChild ("WaveAnim").GetComponent<SpriteRenderer>();
+		renderer.enabled = false;
 
 		if (isPlayer) {
 			moveScript = GetComponent<PlayerMove> ();
@@ -60,8 +65,12 @@ public class WaveControl : MonoBehaviour {
 
 			if (Input.GetMouseButton (waveButton)) {
 				Wave ();
+				renderer.enabled = true;
+
 			} else if (Input.GetMouseButton (beckonButton)) {
 				Beckon ();
+			} else {
+				renderer.enabled = false;
 			}
 
 
@@ -85,6 +94,8 @@ public class WaveControl : MonoBehaviour {
 					int rand = Random.Range (0, 1);
 					string waveType;
 
+					renderer.enabled = true;
+
 					if (rand == 0) {
 						waveType = "wave";
 					} else {
@@ -97,6 +108,8 @@ public class WaveControl : MonoBehaviour {
 						.gameObject.transform.parent
 							.gameObject.GetComponent<WaveControl> ().Initiate (waveType, gameObject);
 
+				} else {
+					renderer.enabled = false;
 				}
 			}
 		}
@@ -155,6 +168,9 @@ public class WaveControl : MonoBehaviour {
 					target = hit.collider.gameObject.transform.parent.gameObject;
 						
 					target.GetComponent<WaveControl> ().Initiate("wave", gameObject);
+
+					target.GetComponent<NpcBehavior> ().setHeading (transform);
+
 				}
 			}
 		}
@@ -216,7 +232,7 @@ public class WaveControl : MonoBehaviour {
 
 				Win ();
 			} else {
-				waiting = true;
+				//waiting = true;
 			}
 
 		} else if (waveType == "beckon") {
@@ -228,7 +244,7 @@ public class WaveControl : MonoBehaviour {
 				target.GetComponent<WaveControl> ().Response ("beckoning", gameObject);
 				Tie ();
 			} else {
-				waiting = true;
+				//waiting = true;
 			}
 		}
 	}
