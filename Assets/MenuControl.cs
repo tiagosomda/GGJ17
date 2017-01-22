@@ -79,10 +79,10 @@ public class MenuControl : MonoBehaviour {
 
 			} else if (evt.isMouse) {
 
-				value = evt.button;
+				value = evt.button.ToString();
 
 				//save the key, value pair for the input code later (during game)
-				PlayerPrefs.SetInt (key, value);
+				PlayerPrefs.SetInt (key, evt.button);
 
 			}
 		 
