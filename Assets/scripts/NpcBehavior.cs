@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class NpcBehavior : MonoBehaviour
 {
-	public int speed;
+	public float speed;
 	private NavMeshAgent nav;
 
 	public Transform anchor;
