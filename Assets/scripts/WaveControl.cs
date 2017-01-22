@@ -46,6 +46,6 @@ public class WaveControl : MonoBehaviour {
 		if ( Input.GetButton(waveButton) || Input.GetKey(waveButton) ) {
 			Debug.Log ("Player Beckons");
 			//execute beckon method
-	
+		}
 	}
 }
