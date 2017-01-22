@@ -8,6 +8,8 @@ public class NpcBehavior : MonoBehaviour
 	public float speed;
 	private NavMeshAgent nav;
 
+	public Transform player;
+
 	public Transform anchor;
 	public float minAchorStay;
 	public float maxAchorStay;
@@ -22,6 +24,7 @@ public class NpcBehavior : MonoBehaviour
 		nav = GetComponent<NavMeshAgent> ();
 		nav.speed = speed;
 
+
 		heading = anchor;
 		nav.destination = heading.position;
 
@@ -32,6 +35,10 @@ public class NpcBehavior : MonoBehaviour
 	void Update ()
 	{
 		DetermineHeading ();
+
+		if (IsNear (player.position, transform.position)) {
+			GameController.gameOver = true;
+		}
 	}
 
 	// ---
@@ -41,7 +48,7 @@ public class NpcBehavior : MonoBehaviour
 
 	private void DetermineHeading ()
 	{
-		var isAtHeading = IsNear(transform.position, heading.position);
+		var isAtHeading = IsNear(transform.position, nav.destination);
 
 		if (isAtHeading) {
 			nav.Stop ();
@@ -62,6 +69,7 @@ public class NpcBehavior : MonoBehaviour
 					
 					heading = anchor;
 					timeout = Random.Range (minAchorStay, maxAchorStay);
+
 
 					nav.destination = heading.position;
 					nav.Resume ();
