@@ -74,15 +74,19 @@ public class MenuControl : MonoBehaviour {
 
 				value = evt.keyCode.ToString ();
 
+				//save the key, value pair for the input code later (during game)
+				PlayerPrefs.SetString (key, value);
+
 			} else if (evt.isMouse) {
 
-				value = evt.button.ToString();
+				value = evt.button;
 
+				//save the key, value pair for the input code later (during game)
+				PlayerPrefs.SetInt (key, value);
 
 			}
 		 
-			//save the key, value pair for the input code later (during game)
-			PlayerPrefs.SetString (key, value);
+
 
 			//change mouse input value to be human readable
 			if (evt.isMouse) {
