@@ -10,17 +10,18 @@ public class PlayerMove : MonoBehaviour
     public float rotationSpeed;
 
 	public bool hasControl= true;
+	private string lastKey;
 
 	public Vector3 movement;
     private Rigidbody rb;
     private float rotationTimer;
+	private float rotation;
 
 
 
     //key binding variables
     private string upButton, downButton, leftButton, rightButton;
 
-    private float rotation;
 
     // Use this for initialization
     void Start()
@@ -34,10 +35,27 @@ public class PlayerMove : MonoBehaviour
 
 		if (hasControl) {
 
+			movement = Vector2.zero;
+
 			CheckInput ();
 
-		} else {
-			movement = Vector3.zero;
+			//use last key pressed to determine movement
+			if (lastKey == upButton) 
+			{
+				movement.z = moveSpeed;
+			}
+			if (lastKey == downButton) 
+			{
+				movement.z = -moveSpeed;
+			}
+			if (lastKey == leftButton)
+			{
+				movement.x = -moveSpeed;
+			}
+			if (lastKey == rightButton)
+			{
+				movement.x = moveSpeed;
+			}
 		}
 
         //movement.x = Input.GetAxis("Horizontal") * moveSpeed;
@@ -88,32 +106,42 @@ public class PlayerMove : MonoBehaviour
     private void CheckInput()
     {
 
-        if (!Input.anyKey)
-        {
-            movement = Vector2.zero;
-        }
 
-        if (Input.GetKey(upButton))
+       	//store last key pressed
+		if (Input.GetKeyDown(upButton))
         {
-            movement.z = moveSpeed;
-        }
-        if (Input.GetKey(downButton))
+			lastKey = upButton;
+		}
+        if (Input.GetKeyDown(downButton))
         {
-            movement.z = -moveSpeed;
+			lastKey= downButton;
         }
-        if (Input.GetKey(leftButton))
+        if (Input.GetKeyDown(leftButton))
         {
-            movement.x = -moveSpeed;
-        }
-        if (Input.GetKey(rightButton))
+			lastKey= leftButton;
+		}
+        if (Input.GetKeyDown(rightButton))
         {
-            movement.x = moveSpeed;
-        }
+			lastKey= rightButton;
+		}
 
-        if (movement.x != 0 && movement.z != 0)
-        {
-            movement = Vector3.zero;
-        }
+		//cancel last key if key is released
+		if (Input.GetKeyUp(upButton) && lastKey == upButton)
+		{
+			lastKey = null;
+		}
+		if (Input.GetKeyUp(downButton) && lastKey == downButton)
+		{
+			lastKey = null;
+		}
+		if (Input.GetKeyUp(leftButton) && lastKey == leftButton)
+		{
+			lastKey = null;
+		}
+		if (Input.GetKeyUp(rightButton) && lastKey == rightButton)
+		{
+			lastKey = null;
+		}
     }
 
 

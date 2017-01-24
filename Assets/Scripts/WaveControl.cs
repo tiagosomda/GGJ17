@@ -22,6 +22,8 @@ public class WaveControl : MonoBehaviour {
 	private SpriteRenderer renderer;
 
 	private Vector3 dir;
+	private RaycastHit hit;
+	private GameObject[] characters;
 	private NavMeshAgent nav;
 
 
@@ -36,9 +38,11 @@ public class WaveControl : MonoBehaviour {
 			speed = moveScript.moveSpeed;
 			dir = moveScript.movement;
 		} else {
+			characters = GameObject.FindGameObjectsWithTag ("worker");
 			nav = GetComponent<NavMeshAgent> ();
 			dir = nav.velocity;
 		}
+
 		waveButton = 0;
 
 		beckonButton = 1;
@@ -76,48 +80,31 @@ public class WaveControl : MonoBehaviour {
 
 		} else {
 
+			//if worker is moving save the direction for when it is not moving
 			if (nav.velocity != Vector3.zero) {
 				dir = nav.velocity;
 			}
 
-			RaycastHit hit;
+			//optimized Raycast which only fires if a worker is within LOS range
+			bool workerIsNear = false;
 
-			Debug.DrawLine (transform.position, transform.position + (dir * range));
+			foreach (GameObject worker in characters) {
 
-			if (Physics.Raycast (transform.position, dir, out hit, range)) {
+				if (Vector3.Distance (worker.transform.position, transform.position) < range) {
 
-				Debug.Log ("hit " + hit.collider.tag);
-				Debug.DrawLine (transform.position, hit.point, Color.red);
-
-				if (hit.collider.tag == "worker") {
-
-					int rand = Random.Range (0, 1);
-					string waveType;
-
-					renderer.enabled = true;
-
-					if (rand == 0) {
-						waveType = "wave";
-					} else {
-						waveType = "beckon";
-					}
-
-					target = hit.collider.gameObject.transform.parent.gameObject;
-
-					hit.collider
-						.gameObject.transform.parent
-							.gameObject.GetComponent<WaveControl> ().Initiate (waveType, gameObject);
-
-				} else {
-					renderer.enabled = false;
+					workerIsNear = true;
 				}
+			}
+
+			if (workerIsNear) {
+				checkLOS ();
 			}
 		}
 	}
 
 	void FixedUpdate() {
 
-		if (target != null) {
+		/*if (target != null) {
 
 			if (forceMovement) {
 				
@@ -132,7 +119,7 @@ public class WaveControl : MonoBehaviour {
 				forceMovement = false;
 			}
 
-		}
+		}*/
 
 	}
 
@@ -151,8 +138,6 @@ public class WaveControl : MonoBehaviour {
 		}
 
 		if (!waving && !beckoning) {
-
-			RaycastHit hit;
 
 			waving = true;
 
@@ -189,8 +174,6 @@ public class WaveControl : MonoBehaviour {
 		}
 
 		if (!waving && !beckoning) {
-
-			RaycastHit hit;
 
 			beckoning = true;
 
@@ -305,5 +288,37 @@ public class WaveControl : MonoBehaviour {
 
 		waving = false;
 		beckoning = false;
+	}
+
+	void checkLOS() {
+
+		Debug.DrawLine (transform.position, transform.position + (dir * range));
+
+		if (Physics.Raycast (transform.position, dir, out hit, range)) {
+
+			Debug.Log ("hit " + hit.collider.tag);
+			Debug.DrawLine (transform.position, hit.point, Color.red);
+
+			if (hit.collider.tag == "worker") {
+
+				int rand = Random.Range (0, 1);
+				string waveType;
+
+				renderer.enabled = true;
+
+				if (rand == 0) {
+					waveType = "wave";
+				} else {
+					waveType = "beckon";
+				}
+
+				target = hit.collider.gameObject.transform.parent.gameObject;
+
+				target.GetComponent<WaveControl> ().Initiate (waveType, gameObject);
+
+			} else {
+				renderer.enabled = false;
+			}
+		}
 	}
 }

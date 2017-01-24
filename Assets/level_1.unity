@@ -2163,6 +2163,14 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 4.97
       objectReference: {fileID: 0}
+    - target: {fileID: 1251326295706400, guid: dd5815eb42b554a42851f94f08b4842a, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351734752141590, guid: dd5815eb42b554a42851f94f08b4842a, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd5815eb42b554a42851f94f08b4842a, type: 2}
   m_IsPrefabParent: 0
@@ -3908,7 +3916,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5f8b76e8ddca5bd449cb1b91349f7485, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0

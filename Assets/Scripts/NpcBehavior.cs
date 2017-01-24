@@ -36,8 +36,17 @@ public class NpcBehavior : MonoBehaviour
 	{
 		DetermineHeading ();
 
-		if (IsNear (player.position, transform.position)) {
-			GameController.gameOver = true;
+		if ( IsNear(player.position, transform.position) ) {
+
+			RaycastHit hit;
+
+			if (Physics.Raycast (transform.position, player.position - transform.position, out hit)) {
+
+				if (hit.collider.gameObject.transform.parent.gameObject.name == "Sloth") {
+
+					GameController.gameOver = true;
+				}
+			}
 		}
 	}
 
